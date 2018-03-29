@@ -32,9 +32,14 @@
         <p>
             <input type="button" id="enter2" value="显示html" onclick="testDiv();" />
         </p>
-        <p>
-            <input type="file" value="打开文件" />
-        </p>
+        <br/>
+        <form action="">
+            <input type="file" value="打开文件" id="pick_img" onchange="showImg(this.id, 'photo');" />
+            <br/>
+            <br/>
+            <img src="" id="photo" width="300px" height="300px" style="display:inline-block;with:100%;" />
+        </form>
+
     </body>
     <script>
         function testDiv() {
@@ -68,6 +73,20 @@
                     document.getElementById("show").innerHTML = "send get responseData from java, data = " + responseData
                 }
             );
+        }
+
+        function showImg(sourceId, tagId) {
+            var url = getFileUrl(sourceId);
+            var imgTag = document.getElementById(tagId);
+            imgTag.src = url;
+        }
+
+        function getFileUrl(sourceId) {
+            var url;
+            if (navigator.userAgent.indexOf("Chrome") > 0) {
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }
+            return url;
         }
 
         function bridgeLog(logContent) {
